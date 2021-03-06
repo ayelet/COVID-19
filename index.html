@@ -1,21 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link href="//db.onlinewebfonts.com/c/457055c70a9c98aa64002f05d6652edc?family=ITC+Eras" rel="stylesheet" type="text/css"/> -->
+    <link rel="stylesheet" href="./CSS/normalize.css">
+    <link rel="stylesheet" href="./CSS/style.css">
     <title>COVID-19</title>
 </head>
+
 <body>
     <header>
         <h1>COVID-19 Stats</h1>
     </header>
     <main>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum sed modi sapiente consequatur error distinctio laboriosam eaque sunt ad, eligendi rerum, aliquam magnam voluptas fugiat at? Illum unde nesciunt iste!</p>
-        <canvas id="chart" width="400" height="400"></canvas>
+        <!-- <p>... Please wait while data loads...</p> -->
+        <!-- //// -->
+        <div  class="container continentWrapper">
+            <label for="continents">Continent: </label>
+            <select class="btn continent" name="continents" id="continents">
+                <option value="Africa">Africa</option>
+                <option value="Americas">Americas</option>
+                <option value="Asia">Asia</option>
+                <option value="Europe">Europe</option>
+                <option value="Oceania">Oceania</option>
+            </select>
+        </div>
+        <div class="container">
+            <h3>Graphs: Number of deceased</h3>
+            <canvas id="chart" width="400" height="400"></canvas>
+        </div>
+        <div class="container statsWrapper">
+            <input type="button" class="btn stats" type="button" value="confirmed">
+            <input type="button" class="btn stats" type="button" value="new cases">
+            <input type="button" class="btn stats" type="button" value="deaths">
+        </div>
+        <!-- ///////// -->
     </main>
+    
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <script src="./script/index.js"></script>
     <script src="./script/covidChart.js"></script>
 </body>
+
 </html>

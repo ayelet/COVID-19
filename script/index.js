@@ -1,12 +1,19 @@
 function handleError(err) {
   console.log(err);
 }
+
+
+
+function changeRegion(newRegion) {
+    let currStats = chart.getStats();
+    displayBarChart(newRegion, currStats);
+}
 const continents = ["Africa", "Americas", "Asia", "Europe", "Oceania"];
 const covidNewCases = [12000, 15000, 13000, 2000, 4000, 24000];
 class Country {
     constructor (data) {
         this.name = data.name;
-        this. code = data.code;
+        this.countryCode = data.code;
         this.population = data.population;
         this.confirmed = data.latest_data.confirmed;
         this.newCofirmed = data.today.cofirmed;
@@ -31,7 +38,7 @@ async function fetchUrl(url) {
 }
 
 // fetch data of countries by continent
-async function loadCountries(continent) {
+async function fetchCountries(continent) {
   const _url = baseEndpoint_Countries+continent;
   let response = await fetchUrl(_url);
   console.log("response from Rest coutries api:", response);
@@ -361,7 +368,38 @@ let myCountries = countriesCases.map(item => { return {name: item.name,
     recovered: item.latest_data.recovered
 };
 });
+class Region {
+    constructor() {
+        this.states = [];
+        this.count = 0;
+    }
+    loadStates(map) {
+        map.array.forEach(state => {
+            this.states.push(state.name);
+        });
+        count = this.states.length;
+    }
+    getStates() { return this.states;}
+}
+
+const dataType = ["confirmed", "newConfirmed", "deaths", "newDeaths", "recovered"];
 console.log("list of hardcoded countires", myCountries);
 loadCovidStats();
-loadCountries("asia");
+fetchCountries("asia");
 
+function displayBarChart(name, stats) {
+    // find which country
+    // find what dataType to display
+    try{
+
+        if (!dataType.includes(stats))
+            throw("invalid statistics type");
+        getCountryData(name, dataType);
+
+        // display the chart
+        return;
+    }
+    catch(err) {
+        handleError(err);
+    }
+}

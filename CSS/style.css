@@ -1,0 +1,53 @@
+@font-face {
+  font-family: "ITC Eras";
+  src: url("//db.onlinewebfonts.com/t/457055c70a9c98aa64002f05d6652edc.eot");
+  src: url("//db.onlinewebfonts.com/t/457055c70a9c98aa64002f05d6652edc.eot?#iefix")
+      format("embedded-opentype"),
+    url("//db.onlinewebfonts.com/t/457055c70a9c98aa64002f05d6652edc.woff2")
+      format("woff2"),
+    url("//db.onlinewebfonts.com/t/457055c70a9c98aa64002f05d6652edc.woff")
+      format("woff"),
+    url("//db.onlinewebfonts.com/t/457055c70a9c98aa64002f05d6652edc.ttf")
+      format("truetype"),
+    url("//db.onlinewebfonts.com/t/457055c70a9c98aa64002f05d6652edc.svg#ITC Eras")
+      format("svg");
+}
+
+
+:root {
+  --background-color: #002060;
+  --text-color: white;
+  --primary-color: #f17623;
+  --secondary-color: #7a7a7a;
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-family: "ITC Eras";
+  font-style: "Demi";
+  min-height: 90vh;
+}
+
+main {
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+    grid-template-rows: auto;
+}
+
+.btn {
+  width: auto;
+  height: 40px;
+  border: 2px solid var(--primary-color);
+  border-radius: 8px;
+  outline: none;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  text-align: center;
+  font-style: "Light";
+}
+
+.container {
+    border: 3px solid var(--primary-color);
+    border-radius: 8px;
+}
