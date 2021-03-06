@@ -2,24 +2,39 @@ function handleError(err) {
   console.log(err);
 }
 const continents = ["Africa", "Americas", "Asia", "Europe", "Oceania"];
-console.log("Hayush!!!!!!!!!!!!!!!1111111");
+
+class Country {
+    constructor (data) {
+        this.name = data.name;
+        this. code = data.code;
+        this.population = data.population;
+        this.confirmed = data.latest_data.confirmed;
+        this.newCofirmed = data.today.cofirmed;
+        this.deaths = data.latest_data.deaths;
+        this.newDeaths = data.today.deaths;
+        this.recovered = data.latest_data.recovered;
+        this.casesPerMillion = data.calculated.cases_per_million_population;
+        this.death_rate = data.calculated.death_rate;
+    }
+}
 const baseEndpoint_Corona_Countries = "https://corona-api.com/countries";
 // Get country by region:
 // https://restcountries.eu/rest/v2/region/:region_name
-const baseEndpoint_Countries = "https://restcountries.herokuapp.com/api/v1/region/asia";
+// const baseEndpoint_Countries = "https://restcountries.eu/rest/v2/all";
+const baseEndpoint_Countries = "https://restcountries.eu/rest/v2/region/";
 const proxy = 'https://api.codetabs.com/v2/region/proxy/?quest=';
 // import chart from './covidChart';
 async function fetchUrl(url) {
   return await fetch(url).catch((err) => {
-    console.error("fetch failed", err);
+    console.error("fetch failed", err); //TODO: add status code checking
   });
 }
 
 // fetch data of countries by continent
-async function loadCountries() {
-  const _url = proxy+baseEndpoint_Countries;
+async function loadCountries(continent) {
+  const _url = baseEndpoint_Countries+continent;
   let response = await fetchUrl(_url);
-  console.log("response from Rest api:", response);
+  console.log("response from Rest coutries api:", response);
   let data = await response.json();
   console.log("after json: ", data);
 
@@ -32,7 +47,7 @@ async function loadCovidStats() {
   let response = await fetch(url);
   console.log(response);
   let data = await response.json();
-  console.log(data);
+  console.log("corona/state data:", data);
   return data;
 }
 // display to chart
@@ -348,4 +363,5 @@ let myCountries = countriesCases.map(item => { return {name: item.name,
 });
 console.log("list of hardcoded countires", myCountries);
 loadCovidStats();
-loadCountries();
+loadCountries("asia");
+
