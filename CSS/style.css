@@ -13,9 +13,27 @@
       format("svg");
 }
 
+@font-face {font-family: "ITC Eras Light";
+    src: url("../fonts/0c67ab09c281e7d98fa88a86488e2dcd.eot"); /* IE9*/
+    src: url("../fonts/0c67ab09c281e7d98fa88a86488e2dcd.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
+    url("../fonts/0c67ab09c281e7d98fa88a86488e2dcd.woff2") format("woff2"), /* chrome、firefox */
+    url("../fonts/0c67ab09c281e7d98fa88a86488e2dcd.woff") format("woff"), /* chrome、firefox */
+    url("../fonts/0c67ab09c281e7d98fa88a86488e2dcd.ttf") format("truetype"), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+    url("../fonts/0c67ab09c281e7d98fa88a86488e2dcd.svg#ITC Eras Light") format("svg"); /* iOS 4.1- */
+  }
+
+  @font-face {font-family: "ITC Eras Demi";
+    src: url("../fonts/457055c70a9c98aa64002f05d6652edc.eot"); /* IE9*/
+    src: url("../fonts/457055c70a9c98aa64002f05d6652edc.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
+    url("../fonts/457055c70a9c98aa64002f05d6652edc.woff2") format("woff2"), /* chrome、firefox */
+    url("../fonts/457055c70a9c98aa64002f05d6652edc.woff") format("woff"), /* chrome、firefox */
+    url("../fonts/457055c70a9c98aa64002f05d6652edc.ttf") format("truetype"), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+    url("../fonts/457055c70a9c98aa64002f05d6652edc.svg#ITC Eras Demi") format("svg"); /* iOS 4.1- */
+  }
 
 :root {
   --background-color: #002060;
+  --hover-color: #030e24;
   --text-color: white;
   --primary-color: #f17623;
   --secondary-color: #7a7a7a;
@@ -24,30 +42,56 @@
 body {
   background-color: var(--background-color);
   color: var(--text-color);
-  font-family: "ITC Eras";
-  font-style: "Demi";
-  min-height: 90vh;
+  font-family: "ITC Eras Demi";
+  /* font-style: "Light"; */
+  /* min-height: 100vh; */
 }
 
 main {
     display: grid;
     grid-template-columns: 1fr 5fr;
     grid-template-rows: auto;
+    grid-gap: 8px;
+    /* height: 95%; */
+    text-align: center;
 }
-
+footer {
+    text-align: center;
+    font-size: 18px;
+}
 .btn {
-  width: auto;
+  width: 100px;
   height: 40px;
   border: 2px solid var(--primary-color);
-  border-radius: 8px;
+  border-radius: 20px;
   outline: none;
-  background-color: var(--background-color);
+  background-color: var(--secondary-color);
   color: var(--text-color);
   text-align: center;
-  font-style: "Light";
+  font-family: "ITC Eras Light", Arial;
+  font-size: 18px;
+  margin: 8px;
+}
+h3, h4, h5, .graph-desc {
+    font-family: "ITC Eras Light", Arial;
+}
+.btn:hover {
+    box-shadow: 0px 0px 8px 2px var(--hover-color);
 }
 
 .container {
     border: 3px solid var(--primary-color);
-    border-radius: 8px;
+    border-radius: 20px;
 }
+
+.graphWrapper {
+    /* height: 50%; */
+}
+
+.radio-btn-selected {
+    background-color: var(--primary-color);
+    border: 3px solid #fff;
+    /* font-size: 32px; */
+    /* line-height: 34px; */
+    /* outline: none; */
+  }

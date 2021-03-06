@@ -6,6 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- <link href="//db.onlinewebfonts.com/c/457055c70a9c98aa64002f05d6652edc?family=ITC+Eras" rel="stylesheet" type="text/css"/> -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"
+        integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu" crossorigin="anonymous">
     <link rel="stylesheet" href="./CSS/normalize.css">
     <link rel="stylesheet" href="./CSS/style.css">
     <title>COVID-19</title>
@@ -16,11 +18,10 @@
         <h1>COVID-19 Stats</h1>
     </header>
     <main>
-        <!-- <p>... Please wait while data loads...</p> -->
-        <!-- //// -->
-        <div  class="container continentWrapper">
-            <label for="continents">Continent: </label>
-            <select class="btn continent" name="continents" id="continents">
+
+        <div class="container continentWrapper">
+            <label for="regions">Continent: </label>
+            <select class="btn regions" name="regions" id="regions">
                 <option value="Africa">Africa</option>
                 <option value="Americas">Americas</option>
                 <option value="Asia">Asia</option>
@@ -28,18 +29,33 @@
                 <option value="Oceania">Oceania</option>
             </select>
         </div>
-        <div class="container">
-            <h3>Graphs: Number of deceased</h3>
-            <canvas id="chart" width="400" height="400"></canvas>
-        </div>
-        <div class="container statsWrapper">
-            <input type="button" class="btn stats" type="button" value="confirmed">
-            <input type="button" class="btn stats" type="button" value="new cases">
-            <input type="button" class="btn stats" type="button" value="deaths">
+        <div class="container graphContainer">
+            <h1>Africa: <span class="graph-desc">Number of New Cases</span></h1>
+            <canvas id="chart" width="400" height="100%"></canvas>
+            <div class="container statsWrapper">
+                <input type="button" class="btn radio-btn stats" type="button" value="Confirmed">
+                <input type="button" class="btn radio-btn stats" type="button" value="New cases">
+                <input type="button" class="btn radio-btn stats" type="button" value="Deaths">
+                <input type="button" class="btn radio-btn stats" type="button" value="Recovered">
+                <input type="button" class="btn radio-btn stats" type="button" value="Critical">
+            </div>
+
         </div>
         <!-- ///////// -->
     </main>
-    
+    <footer>
+        <p>Created by Ayelet Danieli &nbsp;
+            <a href="https://github.com/ayelet">
+                <i class="fab fa-github fa-x" style="color:white;"> </i>
+            </a>    
+            <a href="https://www.linkedin.com/in/ayeletdanieli">
+                <i class="fab fa-linkedin fa-x" style="color:white;"> </i>
+            </a>
+        </p>
+
+        Web fonts: <a href="http://www.onlinewebfonts.com">oNline Web Fonts</a>
+    </footer>
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <script src="./script/index.js"></script>
     <script src="./script/covidChart.js"></script>
