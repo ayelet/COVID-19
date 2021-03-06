@@ -2,7 +2,7 @@ function handleError(err) {
   console.log(err);
 }
 const continents = ["Africa", "Americas", "Asia", "Europe", "Oceania"];
-
+const covidNewCases = [12000, 15000, 13000, 2000, 4000, 24000];
 class Country {
     constructor (data) {
         this.name = data.name;
