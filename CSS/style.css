@@ -98,7 +98,9 @@ h5,
 .btn:hover {
   box-shadow: 0px 0px 8px 2px var(--hover-color);
 }
-
+header {
+  text-align: center;
+}
 .container {
   border: 3px solid var(--primary-color);
   border-radius: 20px;
