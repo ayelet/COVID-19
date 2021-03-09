@@ -204,14 +204,13 @@ class CovidControl {
 //TODO-Get rid ot them! All should be encapsulated
 function onChangeRegion(e) {
   try {
-    let newRegion = e.currentTarget.value;
-    console.log("changed selection to ", newRegion);
-    if (!regions.includes(newRegion))
-      throw ("selected region: Region unknown:", newRegion);
-    displayCountriesInSelect(newRegion);
-    covidControl.setRegion(newRegion);
-    covidControl.setCountry(world.getRegion(newRegion).getState()[0]);
-    document.querySelector('.continentHeader').textContent = `${newRegion}:`;
+    let name = e.currentTarget.value;
+    console.log("changed selection to ", name);
+    if (!regions.includes(name))
+      throw ("selected region: Region unknown:", name);
+    displayCountriesInSelect(name);
+    covidControl.setRegion(name);
+    covidControl.setCountry(world.getRegion(name).getState()[0]);
     updateChart();
   } catch (err) {
     console.log(err);
@@ -221,8 +220,8 @@ function onChangeRegion(e) {
 /////////////////////////
 // display the chart according to current region, state, data
 function updateChart() {
-  // myChart.config.data  = foo;
-  // myChart.update();
+  document.querySelector('.continentHeader').textContent = `${covidControl.getRegion()}:`;
+  document.querySelector('.graph-desc').textContent = covidControl.getData();
   let states = world.getStates(covidControl.getRegion()).map(el => el.name);
   let region = world.getRegion(covidControl.getRegion());
   let dataset = region.getData(covidControl.getData());
@@ -230,9 +229,10 @@ function updateChart() {
   chart.config.data.labels = states;
   chart.config.data.datasets[0].data = dataset;
   chart.config.data.datasets[0].label = covidControl.getData();
-  document.querySelector('.continentHeader').innerHTML = covidControl.getRegion();
-  document.querySelector('.graph-desc').textContent = covidControl.getData();
+
   chart.update();
+  updateCountryData();
+  
 }
 //////////////////////////
 //
@@ -245,7 +245,11 @@ function onChangeCountry(e) {
   covidControl.setCountry(newCountry);
   updateChart();
 }
-
+//TODO: implement
+function updateCountryData() {
+    // let country = covidControl.getState();
+    
+}
 // load countries to select box
 async function displayCountriesInSelect(continent) {
     try{
@@ -316,39 +320,10 @@ async function loadDataFromApi(){
 ////////////////////////////////////////////////
 
 async function main() {
+  document.querySelector('main').style.opacity = 0.2;
   world = new World();
   covidControl = new CovidControl();
 await loadDataFromApi();
-//   let statesJson = null;
-//   // let continent = null;
-//   let i = 0;
-//   for (i = 0; i < regions.length; i++) {
-//     world.addRegion(regions[i]);
-//     try {
-//       console.log("---!!! new region created", regions[i]);
-//       statesJson = await fetchCountries(regions[i]);
-//     } catch (err) {
-//       console.log(`Error in fetching countries data: ${continent} `, err);
-//       return;
-//     }
-
-//     // now fetch covid statistics for each state
-//     for (let j = 0; j < statesJson.length; j++) {
-//       if (statesJson[j].alpha2Code !== "") {
-//         try {
-//           let covidStats = await fetchCovidStats(statesJson[j].alpha2Code);
-//           console.log(covidStats);
-//           let country = new Country(covidStats);
-//           console.log("new state created", country);
-//           let region = world.getRegion(regions[i]);
-//           region.addCountry(country);
-//         } catch (err) {
-//           console.log("Error in fetching covid stats: ", err);
-//         }
-//       }
-//     }
-//   }
-
 
     let regionName = regions[0];
     covidControl.setRegion(regionName);
@@ -358,7 +333,8 @@ await loadDataFromApi();
 
     updateChart();
 
-  document.querySelector(".loaderWrapper").style.display = "none";
+  document.querySelector(".loaderWrapper").style.display = "none"
+  document.querySelector('main').style.opacity = 1;
 }
 ///////////////////////////////////////////////////
 // load data here
