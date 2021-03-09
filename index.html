@@ -15,53 +15,61 @@
 <body>
 
 
-        <header>
-            <h1>COVID-19 Stats</h1>
-        </header>
-        <main>
+    <header>
+        <h1>COVID-19 Stats</h1>
+    </header>
+    <main>
 
-            <div class="container continentWrapper">
-                <label for="regions">Continent: </label>
-                <select class="btn regions" name="regions" id="regions">
-                    <option value="Africa">Africa</option>
-                    <option value="Americas">Americas</option>
-                    <option value="Asia">Asia</option>
-                    <option value="Europe">Europe</option>
-                    <option value="Oceania">Oceania</option>
-                </select>
-                <label for="country">Country: </label>
-                <select class="btn country" name="country" id="country">
-                </select>
-            </div>
-            <div class="container graphContainer">
-                <h1>Africa: <span class="graph-desc"></span></h1>
-                <canvas id="chart" width="400" height="100%"></canvas>
-                <div class="container statsWrapper">
-                    <input type="button" class="btn radio-btn stats confirmed radio-btn-selected" type="button">
-                    <input type="button" class="btn radio-btn stats new-cases" type="button">
-                    <input type="button" class="btn radio-btn stats deaths" type="button">
-                    <input type="button" class="btn radio-btn stats recovered" type="button">
-                    <input type="button" class="btn radio-btn stats critical" type="button">
-                </div>
-
-            </div>
-            <!-- ///////// -->
-        </main>
-        <div class="loader">
-            Please Wait...
+        <div class="container continentWrapper">
+            <label for="regions">Continent: </label>
+            <select class="btn regions" name="regions" id="regions">
+                <option value="Africa">Africa</option>
+                <option value="Americas">Americas</option>
+                <option value="Asia">Asia</option>
+                <option value="Europe">Europe</option>
+                <option value="Oceania">Oceania</option>
+            </select>
+            <label for="country">Country: </label>
+            <select class="btn country" name="country" id="country">
+            </select>
+            <div class="country-data total-cases"></div>
+            <div class="country-data new-cases"></div>
+            <div class="country-data deaths"></div>
+            <div class="country-data new-deaths"></div>
+            <div class="country-data recovered"></div>
+            <div class="country-data critical"></div>
         </div>
-        <footer>
-            <p>Created by Ayelet Danieli &nbsp;
-                <a href="https://github.com/ayelet">
-                    <i class="fab fa-github fa-x" style="color:white;"> </i>
-                </a>
-                <a href="https://www.linkedin.com/in/ayeletdanieli">
-                    <i class="fab fa-linkedin fa-x" style="color:white;"> </i>
-                </a>
-            </p>
-            Web fonts: <a href="http://www.onlinewebfonts.com">oNline Web Fonts</a>
-        </footer>
-  
+        <div class="container graphContainer">
+            <h1 class="graphLabel continentHeader">Africa </h1>
+            <h1 class="graphLabel graph-desc">Confirmed</h1>
+            <canvas id="chart" width="400" height="100%"></canvas>
+            <div class="container statsWrapper">
+                <input type="button" class="btn radio-btn stats confirmed radio-btn-selected" type="button">
+                <input type="button" class="btn radio-btn stats new-cases" type="button">
+                <input type="button" class="btn radio-btn stats deaths" type="button">
+                <input type="button" class="btn radio-btn stats recovered" type="button">
+                <input type="button" class="btn radio-btn stats critical" type="button">
+            </div>
+
+        </div>
+        <!-- ///////// -->
+    </main>
+    <div class="loaderWrapper">
+        <div class="loader"></div>
+        Please wait while data loads...
+    </div>
+    <footer>
+        <p>Created by Ayelet Danieli &nbsp;
+            <a href="https://github.com/ayelet">
+                <i class="fab fa-github fa-x" style="color:white;"> </i>
+            </a>
+            <a href="https://www.linkedin.com/in/ayeletdanieli">
+                <i class="fab fa-linkedin fa-x" style="color:white;"> </i>
+            </a>
+        </p>
+        Web fonts: <a href="http://www.onlinewebfonts.com">oNline Web Fonts</a>
+    </footer>
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <script src="./script/index.js"></script>
     <script src="./script/covidChart.js"></script>

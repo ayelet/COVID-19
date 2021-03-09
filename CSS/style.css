@@ -13,23 +13,37 @@
       format("svg");
 }
 
-@font-face {font-family: "ITC Eras Light";
-    src: url("../fonts/0c67ab09c281e7d98fa88a86488e2dcd.eot"); /* IE9*/
-    src: url("../fonts/0c67ab09c281e7d98fa88a86488e2dcd.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
-    url("../fonts/0c67ab09c281e7d98fa88a86488e2dcd.woff2") format("woff2"), /* chrome、firefox */
-    url("../fonts/0c67ab09c281e7d98fa88a86488e2dcd.woff") format("woff"), /* chrome、firefox */
-    url("../fonts/0c67ab09c281e7d98fa88a86488e2dcd.ttf") format("truetype"), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
-    url("../fonts/0c67ab09c281e7d98fa88a86488e2dcd.svg#ITC Eras Light") format("svg"); /* iOS 4.1- */
-  }
+@font-face {
+  font-family: "ITC Eras Light";
+  src: url("../fonts/0c67ab09c281e7d98fa88a86488e2dcd.eot"); /* IE9*/
+  src: url("../fonts/0c67ab09c281e7d98fa88a86488e2dcd.eot?#iefix")
+      format("embedded-opentype"),
+    /* IE6-IE8 */ url("../fonts/0c67ab09c281e7d98fa88a86488e2dcd.woff2")
+      format("woff2"),
+    /* chrome、firefox */ url("../fonts/0c67ab09c281e7d98fa88a86488e2dcd.woff")
+      format("woff"),
+    /* chrome、firefox */ url("../fonts/0c67ab09c281e7d98fa88a86488e2dcd.ttf")
+      format("truetype"),
+    /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+      url("../fonts/0c67ab09c281e7d98fa88a86488e2dcd.svg#ITC Eras Light")
+      format("svg"); /* iOS 4.1- */
+}
 
-  @font-face {font-family: "ITC Eras Demi";
-    src: url("../fonts/457055c70a9c98aa64002f05d6652edc.eot"); /* IE9*/
-    src: url("../fonts/457055c70a9c98aa64002f05d6652edc.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
-    url("../fonts/457055c70a9c98aa64002f05d6652edc.woff2") format("woff2"), /* chrome、firefox */
-    url("../fonts/457055c70a9c98aa64002f05d6652edc.woff") format("woff"), /* chrome、firefox */
-    url("../fonts/457055c70a9c98aa64002f05d6652edc.ttf") format("truetype"), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
-    url("../fonts/457055c70a9c98aa64002f05d6652edc.svg#ITC Eras Demi") format("svg"); /* iOS 4.1- */
-  }
+@font-face {
+  font-family: "ITC Eras Demi";
+  src: url("../fonts/457055c70a9c98aa64002f05d6652edc.eot"); /* IE9*/
+  src: url("../fonts/457055c70a9c98aa64002f05d6652edc.eot?#iefix")
+      format("embedded-opentype"),
+    /* IE6-IE8 */ url("../fonts/457055c70a9c98aa64002f05d6652edc.woff2")
+      format("woff2"),
+    /* chrome、firefox */ url("../fonts/457055c70a9c98aa64002f05d6652edc.woff")
+      format("woff"),
+    /* chrome、firefox */ url("../fonts/457055c70a9c98aa64002f05d6652edc.ttf")
+      format("truetype"),
+    /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+      url("../fonts/457055c70a9c98aa64002f05d6652edc.svg#ITC Eras Demi")
+      format("svg"); /* iOS 4.1- */
+}
 
 :root {
   --background-color: #002060;
@@ -48,18 +62,18 @@ body {
 }
 
 main {
-    display: grid;
-    grid-template-columns: 1fr 5fr;
-    grid-template-rows: auto;
-    grid-gap: 8px;
-    /* height: 95%; */
-    text-align: center;
-    padding: 8px;
+  display: grid;
+  grid-template-columns: 1fr 5fr;
+  grid-template-rows: auto;
+  grid-gap: 8px;
+  /* height: 95%; */
+  text-align: center;
+  padding: 8px;
 }
 
 footer {
-    text-align: center;
-    font-size: 18px;
+  text-align: center;
+  font-size: 18px;
 }
 .btn {
   width: 100px;
@@ -74,19 +88,68 @@ footer {
   font-size: 18px;
   margin: 8px;
 }
-h3, h4, h5, .graph-desc {
-    font-family: "ITC Eras Light", Arial;
+h3,
+h4,
+h5,
+.graph-desc {
+  font-family: "ITC Eras Light", Arial;
 }
 .btn:hover {
-    box-shadow: 0px 0px 8px 2px var(--hover-color);
+  box-shadow: 0px 0px 8px 2px var(--hover-color);
 }
 
 .container {
-    border: 3px solid var(--primary-color);
-    border-radius: 20px;
+  border: 3px solid var(--primary-color);
+  border-radius: 20px;
 }
 
 .radio-btn-selected {
-    background-color: var(--primary-color);
-    border: 3px solid #fff;
+  background-color: var(--primary-color);
+  border: 3px solid #fff;
+}
+
+.continentWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+}
+
+.select {
+  display: block;
+}
+.loaderWrapper {
+  width: 40vw;
+  height: 40vh;
+  background: #0000;
+  position: absolute;
+  top: 30%;
+  left: 30%;
+  margin: auto;
+  padding: auto;
+  text-align: center;
+}
+
+.loader {
+  margin: auto;
+  width: 80%;
+  height: 80%;
+  background: url("../img/COVID.png") no-repeat center center/contain;
+
+  animation-name: rotate;
+  animation-duration: 15s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
   }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.graphLabel {
+  display: inline;
+}

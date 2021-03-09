@@ -205,12 +205,13 @@ class CovidControl {
 function onChangeRegion(e) {
   try {
     let newRegion = e.currentTarget.value;
-    // console.log("changed selection to ", newRegion);
+    console.log("changed selection to ", newRegion);
     if (!regions.includes(newRegion))
       throw ("selected region: Region unknown:", newRegion);
-    loadCountries(newRegion);
+    displayCountriesInSelect(newRegion);
     covidControl.setRegion(newRegion);
     covidControl.setCountry(world.getRegion(newRegion).getState()[0]);
+    document.querySelector('.continentHeader').textContent = `${newRegion}:`;
     updateChart();
   } catch (err) {
     console.log(err);
@@ -229,48 +230,40 @@ function updateChart() {
   chart.config.data.labels = states;
   chart.config.data.datasets[0].data = dataset;
   chart.config.data.datasets[0].label = covidControl.getData();
+  document.querySelector('.continentHeader').innerHTML = covidControl.getRegion();
   document.querySelector('.graph-desc').textContent = covidControl.getData();
   chart.update();
 }
 //////////////////////////
 //
-function onChangeCountry() {
+function onChangeCountry(e) {
   let newCountry = e.currentTarget.value;
   // console.log("changed selection to ", newRegion);
   // if (!regions.includes(newRegion))
   // throw("selected region: Region unknown:", newRegion);
-  // loadCountries(newRegion);
+  // displayCountriesInSelect(newRegion);
   covidControl.setCountry(newCountry);
   updateChart();
 }
 
 // load countries to select box
-async function loadCountries(continent) {
-  let countries = world.getStates(continent);
-  let text = "";
-  countries.forEach(function (country) {
-    text += `<option value="${country.name}">${country.name}</option>`;
-  });
-  selectCountry.innerHTML = text;
+async function displayCountriesInSelect(continent) {
+    try{
+
+        let countries = world.getStates(continent);
+        let text = "";
+        countries.forEach(function (country) {
+            text += `<option value="${country.name}">${country.name}</option>`;
+        });
+        selectCountry.innerHTML = text;
+        return true;
+    } catch (err) {
+        console.log(err);
+        return false;
+    }
 }
 
-////////////////////////////////////////
-// function displayBarChart(name, stats) {
-//     // find which country
-//     // find what dataType to display
-//     try{
 
-//         if (!CovidStatistics.includes(stats))
-//             throw("invalid statistics type");
-//         getCountryData(name, dataType);
-
-//         // display the chart
-//         return;
-//     }
-//     catch(err) {
-//         handleError(err);
-//     }
-// }
 //////////////////////////////////////////////////////////
 // load corona-stats by country from this call
 async function fetchCovidStats(stateCode) {
@@ -289,51 +282,91 @@ async function fetchCountries(region) {
   let data = await response.json();
   return data;
 }
-
+async function loadDataFromApi(){
+    let statesJson = null;
+    // let continent = null;
+    let i = 0;
+    for (i = 0; i < regions.length; i++) {
+      world.addRegion(regions[i]);
+      try {
+        console.log("---!!! new region created", regions[i]);
+        statesJson = await fetchCountries(regions[i]);
+      } catch (err) {
+        console.log(`Error in fetching countries data: ${continent} `, err);
+        return;
+      }
+  
+      // now fetch covid statistics for each state
+      for (let j = 0; j < statesJson.length; j++) {
+        if (statesJson[j].alpha2Code !== "") {
+          try {
+            let covidStats = await fetchCovidStats(statesJson[j].alpha2Code);
+            console.log(covidStats);
+            let country = new Country(covidStats);
+            console.log("new state created", country);
+            let region = world.getRegion(regions[i]);
+            region.addCountry(country);
+          } catch (err) {
+            console.log("Error in fetching covid stats: ", err);
+          }
+        }
+      }
+    }
+}
 ////////////////////////////////////////////////
 
 async function main() {
   world = new World();
   covidControl = new CovidControl();
+await loadDataFromApi();
+//   let statesJson = null;
+//   // let continent = null;
+//   let i = 0;
+//   for (i = 0; i < regions.length; i++) {
+//     world.addRegion(regions[i]);
+//     try {
+//       console.log("---!!! new region created", regions[i]);
+//       statesJson = await fetchCountries(regions[i]);
+//     } catch (err) {
+//       console.log(`Error in fetching countries data: ${continent} `, err);
+//       return;
+//     }
 
-  let statesJson = null;
-  // let continent = null;
-  let i = 0;
-  for (i = 0; i < regions.length; i++) {
-    world.addRegion(regions[i]);
-    try {
-      console.log("---!!! new region created", regions[i]);
-      statesJson = await fetchCountries(regions[i]);
-    } catch (err) {
-      console.log(`Error in fetching countries data: ${continent} `, err);
-      return;
-    }
+//     // now fetch covid statistics for each state
+//     for (let j = 0; j < statesJson.length; j++) {
+//       if (statesJson[j].alpha2Code !== "") {
+//         try {
+//           let covidStats = await fetchCovidStats(statesJson[j].alpha2Code);
+//           console.log(covidStats);
+//           let country = new Country(covidStats);
+//           console.log("new state created", country);
+//           let region = world.getRegion(regions[i]);
+//           region.addCountry(country);
+//         } catch (err) {
+//           console.log("Error in fetching covid stats: ", err);
+//         }
+//       }
+//     }
+//   }
 
-    // now fetch covid statistics for each state
-    for (let j = 0; j < statesJson.length; j++) {
-      if (statesJson[j].alpha2Code !== "") {
-        try {
-          let covidStats = await fetchCovidStats(statesJson[j].alpha2Code);
-          console.log(covidStats);
-          let country = new Country(covidStats);
-          console.log("new state created", country);
-          let region = world.getRegion(regions[i]);
-          region.addCountry(country);
-        } catch (err) {
-          console.log("Error in fetching covid stats: ", err);
-        }
-      }
-    }
-  }
-  let region = regions[0];
-  covidControl.setRegion(region);
-  covidControl.setCountry(world.getRegion(region).getState()[0]);
-  covidControl.setData(CovidStatistics[0]);
-  await loadCountries(covidControl.getRegion());
-  document.querySelector(".loader").style.display = "none";
+
+    let regionName = regions[0];
+    covidControl.setRegion(regionName);
+    covidControl.setCountry(world.getRegion(regionName).getStates()[0]);
+    covidControl.setData(CovidStatistics[0]);
+    let answer = displayCountriesInSelect(covidControl.getRegion());
+
+    updateChart();
+
+  document.querySelector(".loaderWrapper").style.display = "none";
 }
 ///////////////////////////////////////////////////
 // load data here
 let world = null;
 let covidControl = null;
 window.onload = main().catch(console.log);
+$(window).on("load", function() {
+    document.querySelector(".loader").style.display = "none";
+    $(".loader").fadeOut();
+})
+
