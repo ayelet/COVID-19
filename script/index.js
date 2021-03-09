@@ -73,6 +73,7 @@ statsBtns.forEach((btn, i) => {
       console.log(event, arg);
       covidControl.setData(arg);
       updateChart();
+      updateCountryData();
     })(CovidStatistics[i])
   );
 });
@@ -213,6 +214,7 @@ function onChangeRegion(e) {
     covidControl.setRegion(name);
     covidControl.setCountry(world.getRegion(name).getState()[0]);
     updateChart();
+    updateCountryData();
   } catch (err) {
     console.log(err);
   }
@@ -246,6 +248,7 @@ function onChangeCountry(e) {
   // displayCountriesInSelect(newRegion);
   covidControl.setCountry(newCountry);
   updateChart();
+  updateCountryData();
 }
 //TODO: implement
 function updateCountryData() {
