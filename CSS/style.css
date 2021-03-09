@@ -33,7 +33,7 @@
 
 :root {
   --background-color: #002060;
-  --hover-color: #030e24;
+  --hover-color: #adb2bb;
   --text-color: white;
   --primary-color: #f17623;
   --secondary-color: #7a7a7a;
@@ -54,7 +54,9 @@ main {
     grid-gap: 8px;
     /* height: 95%; */
     text-align: center;
+    padding: 8px;
 }
+
 footer {
     text-align: center;
     font-size: 18px;
@@ -84,14 +86,7 @@ h3, h4, h5, .graph-desc {
     border-radius: 20px;
 }
 
-.graphWrapper {
-    /* height: 50%; */
-}
-
 .radio-btn-selected {
     background-color: var(--primary-color);
     border: 3px solid #fff;
-    /* font-size: 32px; */
-    /* line-height: 34px; */
-    /* outline: none; */
   }
