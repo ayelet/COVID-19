@@ -109,6 +109,7 @@ class World {
     if (region === undefined) throw name + " not found";
     return region;
   }
+  getState(name) { return this.currentRegion.getState(name); }
 }
 /////////////
 class Region {
@@ -237,7 +238,8 @@ function updateChart() {
 //////////////////////////
 //
 function onChangeCountry(e) {
-  let newCountry = e.currentTarget.value;
+  let name = e.currentTarget.value;
+  let country = world.getState(name);
   // console.log("changed selection to ", newRegion);
   // if (!regions.includes(newRegion))
   // throw("selected region: Region unknown:", newRegion);
@@ -247,7 +249,22 @@ function onChangeCountry(e) {
 }
 //TODO: implement
 function updateCountryData() {
-    // let country = covidControl.getState();
+  // this.name = data.data.name;
+  //   this.countryCode = data.data.code;
+  //   this.population = data.data.population;
+  //   this.confirmed = data.data.latest_data.confirmed;
+  //   this.newCases = data.data.today.confirmed;
+  //   this.deaths = data.data.latest_data.deaths;
+  //   this.newDeaths = data.data.today.deaths;
+  //   this.recovered = data.data.latest_data.recovered;
+  //   this.critical = data.data.latest_data.critical;
+    let country = covidControl.getCountry();
+    
+    document.querySelector(".total-cases").textContent = `Total Cases: ${country.confirmed}`
+    document.querySelector(".new-cases").textContent = `New Cases: ${country.newCases}`
+    document.querySelector(".critical").textContent = `Crical: ${country.critical}`
+    document.querySelector(".deaths").textContent = `Deceased: ${country.deaths}`
+
     
 }
 // load countries to select box
