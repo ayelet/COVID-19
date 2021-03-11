@@ -1,4 +1,4 @@
-@font-face {
+/* @font-face {
   font-family: "ITC Eras";
   src: url("//db.onlinewebfonts.com/t/457055c70a9c98aa64002f05d6652edc.eot");
   src: url("//db.onlinewebfonts.com/t/457055c70a9c98aa64002f05d6652edc.eot?#iefix")
@@ -11,7 +11,7 @@
       format("truetype"),
     url("//db.onlinewebfonts.com/t/457055c70a9c98aa64002f05d6652edc.svg#ITC Eras")
       format("svg");
-}
+} */
 
 @font-face {
   font-family: "ITC Eras Light";
@@ -50,7 +50,7 @@
   --hover-color: #adb2bb;
   --text-color: white;
   --primary-color: #f17623;
-  --secondary-color: #7a7a7a;
+  --secondary-color: #595959;
 }
 
 body {
@@ -79,6 +79,7 @@ main {
   display: grid;
   grid-template-rows: 1fr 8fr 1fr;
   grid-template-columns: auto;
+  grid-gap: 8px;
 }
 footer {
   text-align: center;
@@ -150,9 +151,9 @@ header {
 }
 
 .canvas {
-  /* position: absolute; */
-  /* width: 90%; */
-  /* height: 90%; */
+  position: relative;
+  width: 90%;
+  height: 90%;
 }
 
 .graphLabel {
@@ -162,7 +163,9 @@ header {
   display: flex;
   flex-direction: column;
 }
-
+.graphContainer * {
+  margin: 4px 0;
+}
 .canvasContainer {
   position: relative;
   height:75%;
@@ -180,7 +183,7 @@ header {
   margin: auto;
   width: 80%;
   height: 80%;
-  background: url("../img/COVID.png") no-repeat center center/contain;
+  background: url("../img/COVID.webp") no-repeat center center/contain;
   animation-name: rotate;
   animation-duration: 15s;
   animation-iteration-count: infinite;

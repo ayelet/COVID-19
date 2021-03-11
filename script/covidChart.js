@@ -37,7 +37,7 @@ const chart = new Chart(ctx, {
   
 });
 chart.setOptions({
-    responsive: false,
+    responsive: true,
     maintainAspectRatio: false
 });
 // chart.responsive = true;

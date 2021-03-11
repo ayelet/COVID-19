@@ -28,11 +28,7 @@ const covidNewCases = [12000, 15000, 13000, 2000, 4000, 24000];
 const baseEndpoint_Corona_Countries = "https://corona-api.com/countries/";
 
 // Get country by region:
-// https://restcountries.eu/rest/v2/region/:region_name
-// const baseEndpoint_Countries = "https://restcountries.eu/rest/v2/all";
 const baseEndpoint_Countries = "https://restcountries.eu/rest/v2/region/";
-// const baseEndpoint_Countries = "restcountries.eu/rest/v2/region/";
-// const proxy = 'https://api.codetabs.com/v2/region/proxy/?quest=';
 const proxy = "https://cors-anywhere.herokuapp.com/";
 ////////////////////////////////////////////////////////////////////////////
 // Utility fucntions and helper functions
@@ -42,18 +38,18 @@ async function fetchUrl(url) {
   return await fetch(url)
     .then((response) => (response.ok ? response : Error(response.status)))
     .catch((err) => {
-      console.error("fetch failed", err); //TODO: add status code checking
+      console.error("fetch failed", err);
     });
 }
 ////////////////////////////////////////////////////////////////////////////
 // GUI stuff
 // create radio buttons for resource
-let selectRegion = document.querySelector(".regions");
+const selectRegion = document.querySelector(".regions");
 selectRegion.addEventListener("change", onChangeRegion);
-let selectCountry = document.querySelector(".country");
+const selectCountry = document.querySelector(".country");
 selectCountry.addEventListener("change", onChangeCountry);
 
-let statsBtns = document.querySelectorAll(".stats");
+const statsBtns = document.querySelectorAll(".stats");
 statsBtns.forEach((btn, i) => {
   btn.addEventListener("click", function () {
     statsBtns.forEach((btn) => {
@@ -77,7 +73,7 @@ statsBtns.forEach((btn, i) => {
     })(CovidStatistics[i])
   );
 });
-let btnNormalise = document.querySelector('.normalise');
+const btnNormalise = document.querySelector('.normalise');
 btnNormalise.addEventListener("click", () =>{
   covidControl.normaliseData(!covidControl.isNormalised());
   btnNormalise.classList.toggle('checked');
@@ -194,6 +190,7 @@ class Country {
         result = this.recovered;
         break;
     }
+    // normalise the data
     if (normalized && (this.population > 0))
       result = Math.floor(result * 10000000 / this.population);
 
@@ -201,7 +198,8 @@ class Country {
   }
 }
 
-
+//////////////////////////////////////////////////////////
+// Class CovidControl - holds current data according to UI
 class CovidControl {
   constructor() {
     this.currentRegion = "";
@@ -232,6 +230,7 @@ class CovidControl {
   normaliseData(flag) { this.bNormalised = flag; }
   isNormalised() { return this.bNormalised; }
 }
+
 //////////////////////////////////////////////////////
 // Global function -
 //TODO-Get rid ot them! All should be encapsulated
@@ -255,7 +254,7 @@ function onChangeRegion(e) {
 }
 
 //////////////////////////
-//
+// Event Handler
 function onChangeCountry(e) {
   let name = e.currentTarget.value;
   let country = world.getState(name);
@@ -288,6 +287,7 @@ function updateChart() {
   chart.update();
   updateCountryData();
 }
+
 ///////////////////////////////////
 //Update the data for each state individually
 function updateCountryData() {
@@ -307,6 +307,7 @@ function updateCountryData() {
     ".population"
   ).textContent = `Population: ${country.population}`;
 }
+
 // load countries to select box
 async function displayCountriesInSelect(continent) {
   try {
@@ -332,6 +333,7 @@ async function fetchCovidStats(stateCode) {
   let data = await response.json();
   return data;
 }
+                
 ////////////////////////////////////////////////
 // fetch data of countries by continent
 async function fetchCountries(region) {
@@ -373,7 +375,6 @@ async function loadDataFromApi() {
   }
 }
 ////////////////////////////////////////////////
-
 async function main() {
   document.querySelector("main").style.opacity = 0.2;
   world = new World();
@@ -393,10 +394,15 @@ async function main() {
 }
 ///////////////////////////////////////////////////
 // load data here
-let world = null;
-let covidControl = null;
-window.onload = main().catch(console.log);
-$(window).on("load", function () {
-  document.querySelector(".loader").style.display = "none";
-  $(".loader").fadeOut();
-});
+try {
+
+  let world = null;
+  let covidControl = null;
+  window.onload = main().catch(console.log);
+  $(window).on("load", function () {
+    document.querySelector(".loader").style.display = "none";
+    $(".loader").fadeOut();
+  });
+} catch(err) {
+  console.error(err);
+}
