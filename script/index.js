@@ -132,10 +132,8 @@ class Region {
 
   addCountry(state) {
     console.log(`added ${state.name} to ${this.name} ${typeof state}`);
-    // if (typeof state === Country) {
     this.states.push(state);
     this.count++;
-    // }
   }
   getStates() {
     return this.states;
@@ -146,25 +144,10 @@ class Region {
     return state;
   }
   // return an array of covid data from all states
-  getData(data) {
+  getData(data, bNormalised) {
     let arr = [];
-    switch (data) {
-      case "Confirmed":
-        arr = this.states.map((element) => element.confirmed);
-        break;
-      case "Deaths":
-        arr = this.states.map((element) => element.deaths);
-        break;
-      case "New Cases":
-        arr = this.states.map((element) => element.newCases);
-        break;
-      case "Critical":
-        arr = this.states.map((element) => element.critical);
-        break;
-      case "Recovered":
-        arr = this.states.map((element) => element.recovered);
-        break;
-    }
+    
+    arr = this.states.map((element) => element.getData(data, bNormalised));
     console.log(arr);
     return arr;
   }
@@ -181,10 +164,38 @@ class Country {
     this.newDeaths = data.data.today.deaths;
     this.recovered = data.data.latest_data.recovered;
     this.critical = data.data.latest_data.critical;
+
     // this.casesPerMillion = data.calculated.cases_per_million_population;
     // this.death_rate = data.calculated.death_rate;
   }
+
+  getData(data, normalized) {
+    let result=0;
+    switch (data) {
+      case "Confirmed":
+        result = this.confirmed;
+        break;
+      case "Deaths":
+        result = this.deaths;
+        break;
+      case "New Cases":
+        result = this.newCases;
+        break;
+      case "Critical":
+        result = this.critical;
+        break;
+      case "Recovered":
+        result = this.recovered;
+        break;
+    }
+    if (normalized && (this.population > 0))
+      result = Math.floor(result * 10000000 / this.population);
+
+      return result;
+  }
 }
+
+
 class CovidControl {
   constructor() {
     this.currentRegion = "";
@@ -223,7 +234,8 @@ function onChangeRegion(e) {
     displayCountriesInSelect(name);
     covidControl.setRegion(name);
     world.changeRegion(name);
-    covidControl.setCountry(world.getRegion(name).getState()[0]);
+    // let first = covidControl.getRegion(name).getStates(0)
+    covidControl.setCountry(world.getRegion(name).getStates[0]);
     updateChart();
     updateCountryData();
   } catch (err) {
@@ -236,10 +248,6 @@ function onChangeRegion(e) {
 function onChangeCountry(e) {
   let name = e.currentTarget.value;
   let country = world.getState(name);
-  // console.log("changed selection to ", newRegion);
-  // if (!regions.includes(newRegion))
-  // throw("selected region: Region unknown:", newRegion);
-  // displayCountriesInSelect(newRegion);
   covidControl.setCountry(country);
   updateChart();
   updateCountryData();
@@ -248,21 +256,28 @@ function onChangeCountry(e) {
 /////////////////////////
 // display the chart according to current region, state, data
 function updateChart() {
-  document.querySelector(
-    ".continentHeader"
-  ).textContent = `${covidControl.getRegion()}:`;
+  document.querySelector(".continentHeader").textContent = `${covidControl.getRegion()}:`;
   document.querySelector(".graph-desc").textContent = covidControl.getData();
   let states = world.getStates(covidControl.getRegion()).map((el) => el.name);
+  let numStates = states.length;
+  let normaliseData = true //TODO-add UI to toggle 
   let region = world.getRegion(covidControl.getRegion());
-  let dataset = region.getData(covidControl.getData());
+  let dataset = region.getData(covidControl.getData(), normaliseData);
   let labels = world.getStates(covidControl.getRegion()).map((el) => el.name);
   chart.config.data.labels = states;
   chart.config.data.datasets[0].data = dataset;
-  chart.config.data.datasets[0].label = covidControl.getData();
+  // chart.config.data.datasets[0].label = covidControl.getData();
+  let borderColors = new Array(numStates);
+  let bgColors = new Array(numStates);
+  borderColors.fill(`#f17623`);
+  bgColors.fill('#ffff88');
+  chart.config.data.datasets[0].borderColor = borderColors;
+  chart.config.data.datasets[0].backgroundColor = bgColors;
 
   chart.update();
   updateCountryData();
 }
+///////////////////////////////////
 //Update the data for each state individually
 function updateCountryData() {
   let country = covidControl.getCountry();
@@ -277,6 +292,9 @@ function updateCountryData() {
     ".critical"
   ).textContent = `Crical: ${country.critical}`;
   document.querySelector(".deaths").textContent = `Deceased: ${country.deaths}`;
+  document.querySelector(
+    ".population"
+  ).textContent = `Population: ${country.population}`;
 }
 // load countries to select box
 async function displayCountriesInSelect(continent) {

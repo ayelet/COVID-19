@@ -57,24 +57,34 @@ body {
   background-color: var(--background-color);
   color: var(--text-color);
   font-family: "ITC Eras Demi";
-  /* font-style: "Light"; */
-  /* min-height: 100vh; */
+  /* height: 95vh; */
+}
+.title {
+  margin-top: 15px;
+  margin-bottom: 5px;
 }
 
 main {
   display: grid;
-  grid-template-columns: 1fr 5fr;
+  grid-template-columns: 1fr 4fr;
   grid-template-rows: auto;
   grid-gap: 8px;
   /* height: 95%; */
   text-align: center;
   padding: 8px;
   transition: opacity 0.5s ease-in;
+  /* height: 100vh; */
 }
-
+.wrapper {
+  height: 90vh;;
+  display: grid;
+  grid-template-rows: 1fr 8fr 1fr;
+  grid-template-columns: auto;
+}
 footer {
   text-align: center;
   font-size: 18px;
+  margin:2px;
 }
 .btn {
   width: 100px;
@@ -111,7 +121,7 @@ header {
   border: 3px solid #fff;
 }
 
-.continentWrapper {
+.controlWrapper {
   display: flex;
   flex-direction: column;
   justify-content: start;
@@ -133,12 +143,37 @@ header {
   text-align: center;
 }
 
+.canvas {
+  width: 100%;
+
+}
+
+.graphLabel {
+  display: inline;
+}
+.graphContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.canvasContainer {
+  position: relative;
+  height:80%;
+  width: 80vw;
+}
+
+.country-dataWrapper {
+  margin: 0;
+  padding: 25px 5px;
+}
+.country-data {
+  line-height: 1.8rem;
+}
 .loader {
   margin: auto;
   width: 80%;
   height: 80%;
   background: url("../img/COVID.png") no-repeat center center/contain;
-
   animation-name: rotate;
   animation-duration: 15s;
   animation-iteration-count: infinite;
@@ -151,8 +186,4 @@ header {
   to {
     transform: rotate(360deg);
   }
-}
-
-.graphLabel {
-  display: inline;
 }
