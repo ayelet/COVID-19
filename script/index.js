@@ -77,7 +77,13 @@ statsBtns.forEach((btn, i) => {
     })(CovidStatistics[i])
   );
 });
-
+let btnNormalise = document.querySelector('.normalise');
+btnNormalise.addEventListener("click", () =>{
+  covidControl.normaliseData(!covidControl.isNormalised());
+  btnNormalise.classList.toggle('checked');
+  updateChart();
+  updateCountryData();
+})
 function changeCovidData(e, covidData) {
   console.log(e + ": " + covidData);
 }
@@ -201,6 +207,7 @@ class CovidControl {
     this.currentRegion = "";
     this.currentState = "";
     this.currentData = "";
+    this.bNormalised = true;
   }
 
   setRegion(region) {
@@ -221,6 +228,9 @@ class CovidControl {
   getData() {
     return this.currentData;
   }
+
+  normaliseData(flag) { this.bNormalised = flag; }
+  isNormalised() { return this.bNormalised; }
 }
 //////////////////////////////////////////////////////
 // Global function -
@@ -235,7 +245,8 @@ function onChangeRegion(e) {
     covidControl.setRegion(name);
     world.changeRegion(name);
     // let first = covidControl.getRegion(name).getStates(0)
-    covidControl.setCountry(world.getRegion(name).getStates[0]);
+    let states = world.getRegion(name).getStates();
+    covidControl.setCountry(states[0]);
     updateChart();
     updateCountryData();
   } catch (err) {
@@ -260,7 +271,7 @@ function updateChart() {
   document.querySelector(".graph-desc").textContent = covidControl.getData();
   let states = world.getStates(covidControl.getRegion()).map((el) => el.name);
   let numStates = states.length;
-  let normaliseData = true //TODO-add UI to toggle 
+  let normaliseData = covidControl.isNormalised();
   let region = world.getRegion(covidControl.getRegion());
   let dataset = region.getData(covidControl.getData(), normaliseData);
   let labels = world.getStates(covidControl.getRegion()).map((el) => el.name);

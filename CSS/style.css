@@ -57,7 +57,7 @@ body {
   background-color: var(--background-color);
   color: var(--text-color);
   font-family: "ITC Eras Demi";
-  /* height: 95vh; */
+  height: 95vh;
 }
 .title {
   margin-top: 15px;
@@ -69,14 +69,13 @@ main {
   grid-template-columns: 1fr 4fr;
   grid-template-rows: auto;
   grid-gap: 8px;
-  /* height: 95%; */
   text-align: center;
   padding: 8px;
   transition: opacity 0.5s ease-in;
-  /* height: 100vh; */
 }
 .wrapper {
   height: 90vh;;
+  width: 80vw;
   display: grid;
   grid-template-rows: 1fr 8fr 1fr;
   grid-template-columns: auto;
@@ -108,6 +107,12 @@ h5,
 .btn:hover {
   box-shadow: 0px 0px 8px 2px var(--hover-color);
 }
+.normalise{
+  background-color: var(--secondary-color);
+}
+.checked {
+  background-color: var(--primary-color);
+}
 header {
   text-align: center;
 }
@@ -126,6 +131,7 @@ header {
   flex-direction: column;
   justify-content: start;
   align-items: center;
+  height: 95%;
 }
 
 .select {
@@ -144,8 +150,9 @@ header {
 }
 
 .canvas {
-  width: 100%;
-
+  /* position: absolute; */
+  /* width: 90%; */
+  /* height: 90%; */
 }
 
 .graphLabel {
@@ -158,8 +165,8 @@ header {
 
 .canvasContainer {
   position: relative;
-  height:80%;
-  width: 80vw;
+  height:75%;
+  /* width: 100%; */
 }
 
 .country-dataWrapper {
